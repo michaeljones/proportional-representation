@@ -58,5 +58,7 @@ determines their place along the political spectrum.
 
 ## References
 
-- https://en.wikipedia.org/wiki/Hotelling%27s_law#cite_note-3
-- https://www.uh.edu/engines/epi2692.htm
+- [Hotelling's Law - Wikipedia](https://en.wikipedia.org/wiki/Hotelling%27s_law)
+- [Hotelling's Law - uh.edu](https://www.uh.edu/engines/epi2692.htm)
+- [Counter argument for Ice Cream](https://www.reddit.com/r/badeconomics/comments/ae1l6z/so_youre_selling_ice_cream_on_a_beach_where/)
+- [Comment on counter argument regaring politics](https://www.reddit.com/r/badeconomics/comments/ae1l6z/so_youre_selling_ice_cream_on_a_beach_where/edn2pyo/)
