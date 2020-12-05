@@ -4,8 +4,8 @@
 There is a phenomenon in which given a one mile stretch of beach with two ice cream sellers, the ice
 cream sellers will set up next to each other in the middle.
 
-This is bad for the the beach goers who would be best served by having ice cream sellers evenly
-spaced along the beach to minimise the distance to walk to get ice cream from any one point.
+This is bad for the beach goers who would be best served by having ice cream sellers evenly spaced
+along the beach to minimise the distance to walk to get ice cream from any one point.
 
 However with ice cream sellers at the best positions for the beach goers, which would be 25% and 75%
 along the length of the beach, both sellers gain market share by moving towards the middle. This
@@ -51,7 +51,7 @@ In real life, ice cream sellers have the option to differentiate themselves on p
 products they offer. People will walk further and spend more if they value better quality ice cream
 that only one seller sells.
 
-In politics, eveyone has a single vote so the 'price' is fixed and no one has to physically walk
+In politics, everyone has a single vote so the 'price' is fixed and no one has to physically walk
 different distances to different parties. The policies the parties offer are the thing that
 determines their place along the political spectrum.
 
