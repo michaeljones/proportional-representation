@@ -1,7 +1,9 @@
 module Main exposing (..)
 
 import Browser
+import Csv.Decode as CsvDecode
 import Dict exposing (Dict)
+import Hex
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -17,6 +19,7 @@ import Svg.Attributes as SA
 type alias Model =
     { features : List Feature
     , display : Maybe String
+    , votingData : Dict String ConstituencyVoting
     }
 
 
@@ -38,17 +41,53 @@ type alias GeoJson =
 
 type alias Flags =
     { features : List Feature
+    , votesCsv : String
     }
+
+
+type alias ConstituencyVoting =
+    { name : String
+    , percentage : Int
+    }
+
+
+decoder =
+    CsvDecode.map2 ConstituencyVoting
+        (CsvDecode.column 0
+            (CsvDecode.string
+                |> CsvDecode.map
+                    (\str ->
+                        str
+                            |> String.replace " CC" ""
+                            |> String.replace " BC" ""
+                    )
+            )
+        )
+        (CsvDecode.column 8
+            (CsvDecode.string
+                |> CsvDecode.andThen
+                    (\str ->
+                        case String.toInt (String.replace "%" "" str) of
+                            Just int ->
+                                CsvDecode.succeed int
+
+                            Nothing ->
+                                CsvDecode.fail ("Failed to decode int from " ++ str)
+                    )
+            )
+        )
 
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    -- let
-    -- data =
-    --  Decode.decodeValue (Decode.dict Decode.string) flags.data
-    --     |> Result.withDefault Dict.empty
-    -- in
-    ( { features = flags.features, display = Nothing }, Cmd.none )
+    let
+        votingData =
+            CsvDecode.decodeCsv CsvDecode.NoFieldNames decoder flags.votesCsv
+                |> Result.withDefault []
+                |> List.map (\entry -> ( entry.name, entry ))
+                |> Dict.fromList
+    in
+    ( { features = flags.features, votingData = votingData, display = Nothing }, Cmd.none )
 
 
 
@@ -81,7 +120,19 @@ view model =
                 ++ "Z"
 
         nextLevel name list =
-            S.path [ SA.d (pathFrom list), onMouseOver (Over name) ] []
+            case Dict.get name model.votingData of
+                Just data ->
+                    let
+                        colour =
+                            ((toFloat data.percentage / 100.0) * 255)
+                                |> round
+                                |> Hex.toString
+                                |> (\hex -> "#" ++ hex ++ "0000")
+                    in
+                    S.path [ SA.d (pathFrom list), SA.fill colour, onMouseOver (Over name) ] []
+
+                Nothing ->
+                    S.path [ SA.d (pathFrom list), SA.fill "#112233", onMouseOver (Over name) ] []
 
         topLevel name list =
             List.map (nextLevel name) list

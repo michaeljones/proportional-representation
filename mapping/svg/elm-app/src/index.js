@@ -2,12 +2,11 @@ import "./main.css";
 import { Elm } from "./Main.elm";
 import * as serviceWorker from "./serviceWorker";
 
-const data = require("./uk-constituencies-2015.json");
+import votingData from "./votes.js";
 
-console.log(data);
+const geojson = require("./uk-constituencies-2015.json");
 
-// const features = data.features.filter(feature => feature.type === "Polygon").map(feature => ({ ...feature, coordinates: feature.coordinates.map(coord => ({x: coord[0], y: coord[1]}))}))
-const features = data.features.map((feature) => {
+const features = geojson.features.map((feature) => {
     if (feature.geometry.type === "Polygon") {
         return {
             name: feature.properties.pcon15nm,
@@ -31,7 +30,7 @@ console.log(features);
 
 Elm.Main.init({
     node: document.getElementById("root"),
-    flags: { features },
+    flags: { features, votesCsv: votingData },
 });
 
 // If you want your app to work offline and load faster, you can change
